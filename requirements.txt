@@ -1,0 +1,7 @@
+shiny
+pandas
+pyyaml
+numpy
+plotly 
+scipy
+shinywidgets

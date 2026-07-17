@@ -1,0 +1,21 @@
+
+# Python Virtual Environments
+venv/
+.venv/
+env/
+Lib/
+Scripts/
+
+# Python Cache
+src/__pycache__/
+__pycache__/
+*.pyc
+*.pyo
+
+# Secrets and API Keys
+.env
+.env.local
+
+#Windows System Files
+.DS_Store
+Thumbs.db
