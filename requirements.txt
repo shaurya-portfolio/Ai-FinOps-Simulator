@@ -4,3 +4,4 @@ plotly
 shinywidgets
 pyyaml
 python-dotenv
+requests

@@ -1,0 +1,12 @@
+{
+    "https://api.shinyapps.io": {
+        "server_url": "https://api.shinyapps.io",
+        "filename": "C:\\Users\\srish\\OneDrive\\Desktop\\Programming\\PYTHON FILES\\PROJECTS\\AI FinOps & Cloud CapEx Simulator",
+        "app_url": "https://shaurya-portfolio.shinyapps.io/ai-finops-simulator/",
+        "app_id": "17619624",
+        "app_guid": null,
+        "title": "Ai-FinOps-Simulator",
+        "app_mode": "python-shiny",
+        "app_store_version": 1
+    }
+}

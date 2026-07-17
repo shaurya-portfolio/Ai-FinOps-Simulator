@@ -2,6 +2,35 @@ from shiny import App, ui, render, reactive
 from shinywidgets import output_widget, render_plotly
 import plotly.graph_objects as go
 from src.simulation_engine import calculate_deterministic_metrics, run_monte_carlo_simulation
+#automation bridge
+import requests
+import yaml
+
+DATA_URL = "https://raw.githubusercontent.com/shaurya-portfolio/Ai-FinOps-Simulator/main/src/cloud_pricing.yaml"
+
+finops_data = {
+    "market_size": 100000,
+    "market_share": 5.0,
+    "unit_price": 150.0,       
+    "fixed_costs": 50000,
+    "variable_cost": 60.0      
+}
+
+try:
+    response = requests.get(DATA_URL)
+    if response.status_code == 200:
+        live_data = yaml.safe_load(response.text)
+        
+        
+        aws_a100_on_demand = live_data['providers']['aws']['nvidia_a100']['on_demand_rate']
+        aws_a100_spot = live_data['providers']['aws']['nvidia_a100']['spot_rate_baseline']
+        
+       
+        finops_data["unit_price"] = aws_a100_on_demand
+        finops_data["variable_cost"] = aws_a100_spot
+        
+except Exception as e:
+    print(f"Error in Live Data Lane: {e}")
 
 
 #Frontend UI
@@ -40,11 +69,12 @@ app_ui = ui.page_fluid(
             ui.h4("FinOps Parameters"),
             ui.hr(style="border-top: 1px solid #475569;"),
 
-            ui.input_numeric("market_size","Total AI Compute Demand (Hours)",value = 100000),
-            ui.input_slider("market_share","FinOps Agent Adoption Rate (%)",min=0.0,max=100.0,value=5.0,step=0.5),
-            ui.input_numeric("unit_price", "On-Demand GPU Hourly Rate ($)", value=150),
-            ui.input_numeric("fixed_costs", "Base CapEx ($)", value=50000),
-            ui.input_numeric("variable_cost", "Optimized GPU Spot Rate ($)", value=60),
+            
+            ui.input_numeric("market_size","Total AI Compute Demand (Hours)", value=finops_data.get("market_size", 100000)),
+            ui.input_slider("market_share","FinOps Agent Adoption Rate (%)", min=0.0, max=100.0, value=finops_data.get("market_share", 5.0), step=0.5),
+            ui.input_numeric("unit_price", "On-Demand GPU Hourly Rate ($)", value=finops_data.get("unit_price", 150)),
+            ui.input_numeric("fixed_costs", "Base CapEx ($)", value=finops_data.get("fixed_costs", 50000)),
+            ui.input_numeric("variable_cost", "Optimized GPU Spot Rate ($)", value=finops_data.get("variable_cost", 60)),
             width="320px"
         ),
 

@@ -11,6 +11,7 @@ src/__pycache__/
 __pycache__/
 *.pyc
 *.pyo
+rsconnect-python/
 
 # Secrets and API Keys
 .env
