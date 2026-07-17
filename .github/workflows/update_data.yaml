@@ -19,7 +19,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install requests pyyaml pandas
+          pip install requests pyyaml pandas python-dotenv
 
       - name: Run ETL Script
         run: python src/scraper.py 
